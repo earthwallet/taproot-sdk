@@ -28,6 +28,7 @@
     "test-psbt": "yarn build && env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/psbt.spec.ts'",
     "test-psbt-multi": "yarn build && env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/psbtmulti.spec.ts'",
     "test-wallet": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  'test/wallet.spec.ts'",
+    "test-inscribe": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  'test/inscribe.spec.ts'",
     "test-tc": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  'test/tc.spec.ts'"
   },
   "devDependencies": {

@@ -8,6 +8,20 @@ interface UTXO {
     value: BigNumber;
 }
 
+interface TxStatus {
+    confirmed: boolean;
+    block_height: number;
+    block_hash: string;
+    block_time: number;
+}
+
+interface AddressTxsUtxo {
+    txid: string;
+    vout: number;
+    status: TxStatus;
+    value: number;
+}
+
 // key : "TxID:OutcoinIndex" : Inscription[]
 interface Inscription {
     offset: BigNumber,
@@ -94,6 +108,7 @@ interface NeedPaymentUTXO {
 
 export {
     UTXO,
+    AddressTxsUtxo,
     Inscription,
     ICreateTxResp,
     ICreateRawTxResp,
