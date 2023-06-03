@@ -1,4 +1,3 @@
-import { Mainnet, TcClient } from 'tc-js';
 import { convertPrivateKeyFromStr, createInscribeTx } from "../src";
 
 import BigNumber from 'bignumber.js';

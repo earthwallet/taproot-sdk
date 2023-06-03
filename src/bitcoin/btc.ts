@@ -29,28 +29,19 @@ export const getAllUnspentTransactions_mempool = async (address, symbol, testnet
   try {
     const response = await axios.get(apiUrl);
     const unspentTransactions = response.data;
-    if (symbol == 'BTC_TAPROOT') {
-      return unspentTransactions.map((utxo: AddressTxsUtxo) => ({
+    const promises = unspentTransactions.map(async (utxo: AddressTxsUtxo) => {
+      let scripData = await getScriptFromTxId(utxo.txid, utxo.vout, testnet);
+      return {
         hash: utxo.txid,
         index: utxo.vout,
-        address: address,
         value: utxo.value,
-      }));
-    } else {
-      const promises = unspentTransactions.map(async (utxo: AddressTxsUtxo) => {
-        let scripData = await getScriptFromTxId(utxo.txid, utxo.vout, testnet);
-        return {
-          hash: utxo.txid,
-          index: utxo.vout,
-          value: utxo.value,
-          blockHeight: utxo.status.block_height,
-          script: scripData.scriptpubkey,
-          address: scripData.scriptpubkey_address,
-          type: scripData.scriptpubkey_type,
-        };
-      });
-      return Promise.all(promises);
-    }
+        blockHeight: utxo.status.block_height,
+        script: scripData.scriptpubkey,
+        address: scripData.scriptpubkey_address,
+        type: scripData.scriptpubkey_type,
+      };
+    });
+    return Promise.all(promises);
   } catch (error) {
     console.error(error);
     return [];
