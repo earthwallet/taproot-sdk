@@ -72,6 +72,3 @@ test/.env
 
 .idea
 .vscode
-
-# dist folder
-dist
