@@ -1,6 +1,6 @@
 {
   "name": "taproot-sdk",
-  "version": "0.1.0",
+  "version": "0.4.0",
   "license": "MIT",
   "keywords": [],
   "files": [
@@ -25,11 +25,8 @@
     "pre-commit": "lint-staged && yarn build",
     "test": "yarn build && env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/testnet.spec.ts'",
     "test-util": "yarn build && env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/utils.spec.ts'",
-    "test-psbt": "yarn build && env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/psbt.spec.ts'",
-    "test-psbt-multi": "yarn build && env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register 'test/psbtmulti.spec.ts'",
     "test-wallet": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  'test/wallet.spec.ts'",
-    "test-inscribe": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  'test/inscribe.spec.ts'",
-    "test-tc": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  'test/tc.spec.ts'"
+    "test-inscribe": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha -r ts-node/register  'test/inscribe.spec.ts'"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.4.4",
@@ -73,7 +70,6 @@
     "form-data": "^4.0.0",
     "js-sha3": "^0.8.0",
     "sats-connect": "^0.1.11",
-    "tc-js": "https://github.com/TrustlessComputer/tc-sdk#v0.1.30",
     "tiny-secp256k1": "^2.2.1",
     "ts-mocha": "^10.0.0",
     "web3": "^1.9.0",

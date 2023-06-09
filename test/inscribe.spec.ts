@@ -1,6 +1,7 @@
 import * as bitcoin from 'bitcoinjs-lib';
 import { getAllUnspentTransactions_mempool } from '../src/bitcoin/btc';
-import { SafeCardinalUTXO, btc_inscribe, getInscribeTxsInfo } from '../src/bitcoin/inscribe';
+import { btc_inscribe, getInscribeTxsInfo } from '../src/bitcoin/inscribe';
+import { SafeCardinalUTXO } from '../src/bitcoin/types';
 
 const TEST_MNE_1 =
   'open jelly jeans corn ketchup supreme brief element armed lens vault weather original scissors rug priority vicious lesson raven spot gossip powder person volcano';
@@ -90,7 +91,7 @@ describe('Create Testnet Inscription', async () => {
 
     const cardinalUTXOsToUse = parsedUtxos;
     const content = {
-      data: 'hello world',
+      data: 'earthwallet.io',
       mime: 'text/plain;charset=utf-8',
     };
     const websiteFeeInSats = 0;

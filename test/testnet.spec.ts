@@ -2,7 +2,7 @@ import * as bitcoin from 'bitcoinjs-lib';
 import { assert } from 'chai';
 import BIP32Factory from 'bip32';
 import { initEccLib } from 'bitcoinjs-lib';
-import * as ecc from 'tiny-secp256k1';
+import * as ecc from '@bitcoinerlab/secp256k1';
 import * as bip39 from 'bip39';
 import {
   generateTaprootKeyPair,

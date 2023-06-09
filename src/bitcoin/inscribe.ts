@@ -9,8 +9,10 @@ import {
   mnemonicToTaprootPrivateKey,
   setBTCNetwork,
   toXOnly,
+  SafeCardinalUTXO,
+  SafeOrdinalUTXO,
 } from '.';
-import ecc from '@bitcoinerlab/secp256k1';
+import * as ecc from '@bitcoinerlab/secp256k1';
 import { mnemonicToSeedSync } from 'bip39';
 import wif from 'wif';
 import { getTxSize } from './sizeEstimate';
@@ -32,36 +34,6 @@ export const splitByNChars = (str: string, n: number): string[] => {
   return result;
 };
 
-export interface SafeCardinalUTXO {
-  status: string; // for now always mined
-  txId: string;
-  index: number;
-  value: number;
-  script: string;
-  address: string;
-  blockHeight: number;
-  type: string;
-}
-
-export interface SafeInscription {
-  id: string;
-  genesisFee: number;
-  genesisHeight: number;
-  number: number;
-  satpoint: string;
-  timestamp: number;
-}
-export interface SafeOrdinalUTXO {
-  status: string; // for now always mined
-  txId: string;
-  index: number;
-  value: number;
-  script: string;
-  address: string;
-  blockHeight: number;
-  type: string;
-  inscriptions: Array<SafeInscription>;
-}
 
 export const generateRevealAddress = (
   xOnlyPubKey: Buffer,
@@ -105,9 +77,9 @@ export const generateRevealAddress = (
   });
 
   const tapLeafScript = {
-    leafVersion: inscribeLockRedeem.redeemVersion!,
+    leafVersion: inscribeLockRedeem.redeemVersion,
     script: inscribeLockRedeem.output || Buffer.from(''),
-    controlBlock: inscribeP2tr.witness![inscribeP2tr.witness!.length - 1],
+    controlBlock: inscribeP2tr.witness[inscribeP2tr.witness?.length - 1],
   };
 
   return {
@@ -260,8 +232,6 @@ export const getWalletNode = (senderMnemonic: string, isTestNet?): any => {
   const decoded = wif.decode(address.toWIF(), address.network.wif);
   return bip32.fromPrivateKey(decoded.privateKey, address.chainCode, network);
 };
- 
-
 
 export const chooseUTXOs = (
   utxos: Array<SafeCardinalUTXO>,
@@ -291,9 +261,7 @@ export const chooseUTXOs = (
     const chosen = [];
     for (const utxo of lessers) {
       if (utxo.value < DUST_LIMIT)
-        throw new Error(
-          'Amount requires usage of dust UTXOs. Set smaller amount'
-        );
+        throw new Error('Amount requires usage of dust UTXOs. Set smaller amount');
       sum += utxo.value;
       chosen.push(utxo);
       if (sum >= amount) break;
@@ -306,11 +274,7 @@ export const chooseUTXOs = (
   }
 };
 
-
-const getOutputAddressTypeCounts = (
-  addresses: Array<string>,
-  network: bitcoin.Network
-) => {
+const getOutputAddressTypeCounts = (addresses: Array<string>, network: bitcoin.Network) => {
   let p2pkh = 0;
   let p2sh = 0;
   let p2wpkh = 0;
@@ -346,8 +310,6 @@ const getOutputAddressTypeCounts = (
 
   return { p2pkh, p2sh, p2wpkh, p2wsh, p2tr };
 };
-
-
 
 export const getInscribeTxsInfo = (
   utxos: Array<SafeCardinalUTXO>,
@@ -430,13 +392,6 @@ export const getInscribeTxsInfo = (
   };
 };
 
-
-
-
-
-
-
-
 export const btc_inscribe = async (
   senderMnemonic: string,
   mimeType: string,
@@ -510,4 +465,3 @@ export const btc_inscribe = async (
     throw error;
   }
 };
-
