@@ -34,7 +34,6 @@ export const splitByNChars = (str: string, n: number): string[] => {
   return result;
 };
 
-
 export const generateRevealAddress = (
   xOnlyPubKey: Buffer,
   mimeType: string,
@@ -338,7 +337,6 @@ export const getInscribeTxsInfo = (
   const REVEAL_TX_SIZE = (websiteFeeInSats ? 180 : 137) + hexData.length / 4;
 
   const SERVICE_FEE = Math.ceil((serviceFee / btcPrice) * 100000000);
-
   const REVEAL_COST = POSTAGE_SIZE + (websiteFeeInSats || 0) + Math.ceil(REVEAL_TX_SIZE * feeRate);
 
   let chosenUTXOs: Array<SafeCardinalUTXO> = [];
@@ -406,6 +404,7 @@ export const btc_inscribe = async (
   serviceFee: { feeAmount: number; feeReceiver: string },
   network: bitcoin.Network,
   postageSize: number,
+  btcPrice: number,
   isTestNet?: boolean
 ): Promise<{ commit: string; commitHex: string; revealHex: string; reveal: string }> => {
   try {
@@ -425,7 +424,7 @@ export const btc_inscribe = async (
       hexData,
       Network
     );
-
+    const serviceFeeFeeAmountInSats = Math.ceil((serviceFee.feeAmount / btcPrice) * 100000000);
     const commitPSBT = getInscribeCommitTx(
       chosenUTXOs,
       committerAddress,
@@ -433,7 +432,7 @@ export const btc_inscribe = async (
       revealCost,
       change,
       Buffer.from(internalPubKey),
-      serviceFee.feeAmount,
+      serviceFeeFeeAmountInSats,
       serviceFee.feeReceiver,
       network
     );
@@ -461,7 +460,7 @@ export const btc_inscribe = async (
       reveal: revealTx.getId(),
     };
   } catch (error) {
-    console.log(error);
+    console.log('btc_inscribe: ' + error);
     throw error;
   }
 };
