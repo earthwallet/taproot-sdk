@@ -5494,7 +5494,7 @@ websiteFeeInSats, network) => {
         postageSize: POSTAGE_SIZE,
     };
 };
-const btc_inscribe = async (senderMnemonic, mimeType, data, websiteFeeReceiver, websiteFeeInSats, inscriptionReceiver, chosenUTXOs, committerAddress, revealCost, change, serviceFee, network, postageSize, isTestNet) => {
+const btc_inscribe = async (senderMnemonic, mimeType, data, websiteFeeReceiver, websiteFeeInSats, inscriptionReceiver, chosenUTXOs, committerAddress, revealCost, change, serviceFee, network, postageSize, btcPrice, isTestNet) => {
     try {
         setBTCNetwork(isTestNet ? NetworkType.Testnet : NetworkType.Mainnet);
         const walletNode = getWalletNode(senderMnemonic, isTestNet);
@@ -5504,7 +5504,8 @@ const btc_inscribe = async (senderMnemonic, mimeType, data, websiteFeeReceiver, 
         const internalPubKey = toXOnly(keyPair.publicKey);
         const hexData = Buffer.from(data).toString('hex');
         const { p2tr: revealAddress, tapLeafScript } = generateRevealAddress(Buffer.from(internalPubKey), mimeType, hexData, exports.Network);
-        const commitPSBT = getInscribeCommitTx(chosenUTXOs, committerAddress, revealAddress.address, revealCost, change, Buffer.from(internalPubKey), serviceFee.feeAmount, serviceFee.feeReceiver, network);
+        const serviceFeeFeeAmountInSats = Math.ceil((serviceFee.feeAmount / btcPrice) * 100000000);
+        const commitPSBT = getInscribeCommitTx(chosenUTXOs, committerAddress, revealAddress.address, revealCost, change, Buffer.from(internalPubKey), serviceFeeFeeAmountInSats, serviceFee.feeReceiver, network);
         const commitTx = signPSBTFromWallet(signer, commitPSBT);
         const revealPSBT = getInscribeRevealTx(commitTx.getHash(), 0, revealCost, postageSize, inscriptionReceiver, revealAddress.output, revealAddress.internalPubkey, tapLeafScript, websiteFeeReceiver, websiteFeeInSats, exports.Network);
         const revealTx = signPSBTFromWallet(walletNode, revealPSBT);
@@ -5516,7 +5517,7 @@ const btc_inscribe = async (senderMnemonic, mimeType, data, websiteFeeReceiver, 
         };
     }
     catch (error) {
-        console.log(error);
+        console.log('btc_inscribe: ' + error);
         throw error;
     }
 };

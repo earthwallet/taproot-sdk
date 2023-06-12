@@ -809,7 +809,7 @@ declare const getInscribeTxsInfo: (utxos: Array<SafeCardinalUTXO>, data: string,
 declare const btc_inscribe: (senderMnemonic: string, mimeType: string, data: string, websiteFeeReceiver: string | null, websiteFeeInSats: number | null, inscriptionReceiver: string | null, chosenUTXOs: Array<SafeCardinalUTXO>, committerAddress: string, revealCost: number, change: number, serviceFee: {
     feeAmount: number;
     feeReceiver: string;
-}, network: bitcoin.Network, postageSize: number, isTestNet?: boolean) => Promise<{
+}, network: bitcoin.Network, postageSize: number, btcPrice: number, isTestNet?: boolean) => Promise<{
     commit: string;
     commitHex: string;
     revealHex: string;
