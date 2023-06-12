@@ -5719,30 +5719,6 @@ tar@^4.0.2:
     safe-buffer "^5.2.1"
     yallist "^3.1.1"
 
-"tc-js@https://github.com/TrustlessComputer/tc-sdk#v0.1.30":
-  version "0.0.1"
-  resolved "https://github.com/TrustlessComputer/tc-sdk#eb1146b118e44260c2cf4c8d028a61bfc75fa676"
-  dependencies:
-    "@bitcoinerlab/secp256k1" "^1.0.2"
-    "@types/node" "^17.0.13"
-    axios "^0.24.0"
-    bignumber.js "^9.1.1"
-    bip32 "^4.0.0"
-    bitcoinjs-lib "github:generative-xyz/bitcoinjs-lib"
-    browserify "^17.0.0"
-    crypto-js "^4.1.1"
-    dotenv "^16.0.3"
-    ecpair "^2.1.0"
-    ethereumjs-wallet "^1.0.2"
-    ethers "5.7.1"
-    form-data "^4.0.0"
-    js-sha3 "^0.8.0"
-    sats-connect "^0.1.11"
-    ts-mocha "^10.0.0"
-    underscore "^1.13.6"
-    web3 "^1.9.0"
-    wif "^2.0.6"
-
 text-extensions@^1.0.0:
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/text-extensions/-/text-extensions-1.9.0.tgz#1853e45fee39c945ce6f6c36b2d659b5aabc2a26"
@@ -6034,11 +6010,6 @@ undeclared-identifiers@^1.1.2:
     get-assigned-identifiers "^1.2.0"
     simple-concat "^1.0.0"
     xtend "^4.0.1"
-
-underscore@^1.13.6:
-  version "1.13.6"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.6.tgz#04786a1f589dc6c09f761fc5f45b89e935136441"
-  integrity sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==
 
 universalify@^0.1.0:
   version "0.1.2"

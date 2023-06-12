@@ -38,7 +38,8 @@ describe('Create Inscription', async () => {
         : [];
     console.log(parsedUtxos, 'parsedUtxos');
 
-   
+    const btcPrice = 27000; // in USD
+
     const respo = await btc_inscribe(
       TEST_MNE_1,
       'text/plain;charset=utf-8',
@@ -56,6 +57,7 @@ describe('Create Inscription', async () => {
       },
       bitcoin.networks.bitcoin,
       10,
+      btcPrice,
       false
     );
     console.log('respo', respo);
@@ -97,12 +99,12 @@ describe('Create Testnet Inscription', async () => {
     const websiteFeeInSats = 0;
     const feeRate = 7;
     const serviceFee = {
-      feeAmount: 0, // in dollars
+      feeAmount: 0.5, // in dollars
       feeReceiver: 'tb1p5hwep2dna6wjhk6atjh0uyjmmp095y2arz3z32c9udmde7qrgwrseypr8x',
     };
     const websiteFee = {
       websiteFeeInSats: null,
-      websiteFeeReceiver: null,
+      websiteFeeReceiver: 'tb1p5hwep2dna6wjhk6atjh0uyjmmp095y2arz3z32c9udmde7qrgwrseypr8x',
     };
     const btcPrice = 27000; // in USD
     const network = bitcoin.networks.testnet;
@@ -134,6 +136,7 @@ describe('Create Testnet Inscription', async () => {
       serviceFee,
       network,
       postageSize,
+      btcPrice,
       true
     );
     console.log('respo', respo);
